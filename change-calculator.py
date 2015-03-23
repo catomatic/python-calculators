@@ -8,9 +8,6 @@ import traceback
 import sys
 
 def calculate_coins(num):
-    # Function to calculate amount of each coin in 
-    # the change
-    # Use tuples in a list so the calculation is in proper order
     coins = [
         ('Twenties', 20.00),
         ('Tens', 10.00),
@@ -22,9 +19,6 @@ def calculate_coins(num):
         ('Pennies', .01)
     ]
     coins_each = {}
-    # Loop to find out how many of each coins are in total
-    # change and add them to coins_each, from largest coin
-    # to smallest
     for k, v in coins:
         count = 0
         while num >= v:
@@ -36,17 +30,24 @@ def calculate_coins(num):
         print '{0}: {1}'.format(k, v)
 
 
+def usage_info():
+    print 'Usage: [Cost of item] [Total given]'
+
+
 def main():
     try:
-        cost = abs(float(raw_input('Cost of item:\n> ')))
-        total_given = abs(float(raw_input('Total amount given:\n> ')))
-        change_total = total_given - cost
+        if sys.argv[1] == "--help" or sys.argv[1] == "-h":
+            usage_info()
+        else:
+            cost = sys.argv[1]
+            total_given = sys.argv[2]
+            change_total = float(total_given) - float(cost)
 
-        print '\nCost: ${0}'.format(round(cost, 2))
-        print 'Total amount given: ${0}'.format(round(total_given, 2))
-        print 'Total change: ${0}\n'.format(round(change_total, 2))
+            print 'Cost: ${0}'.format(round(float(cost), 2))
+            print 'Total amount given: ${0}'.format(round(float(total_given), 2))
+            print 'Total change: ${0}'.format(round(change_total, 2))
 
-        calculate_coins(change_total)
+            calculate_coins(change_total)
 
     except Exception:
         print traceback.print_exc()

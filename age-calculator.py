@@ -12,11 +12,10 @@ import datetime
 
 
 def calc_age(month, day, year):
-    # Calculate a person's age based on current month, day, year
-    # Takes person's birth month, day and year as args
     base_age = int(strftime('%Y')) - year
     bday_string = '{0} {1} {2}'.format(month, day, int(strftime('%Y')))
-    day_of_year = datetime.datetime.strptime(bday_string, '%m %d %Y').strftime('%j')
+    day_of_year = datetime.datetime.strptime(bday_string, 
+        '%m %d %Y').strftime('%j')
 
     if int(day_of_year) > int(strftime('%j')):
         return base_age - 1
@@ -27,14 +26,26 @@ def calc_age(month, day, year):
         return base_age
 
 
+def usage_info():
+    print 'Usage: [MM] [DD] [YYYY]'
+    print 'MM: month of birth'
+    print 'DD: day of birth'
+    print 'YYYY: year of birth'
+
+
 def main():
     try:
-        month = int(raw_input('Enter month of birth (MM):\n> '))
-        day = int(raw_input('Enter day of birth (DD):\n> '))
-        year = int(raw_input('Enter year of birth (YYYY):\n> '))
-        print '\n{0} years old.\n'.format(calc_age(month, day, year))
+        if sys.argv[1] == "--help" or sys.argv[1] == "-h":
+            usage_info()
+        else:
+            month = sys.argv[1]
+            day = sys.argv[2]
+            year = sys.argv[3]
+            print '{0} years old.'.format(calc_age(int(month), 
+                int(day), int(year)))
     except Exception:
-        print traceback.print_exc()
+        usage_info()
+        #print traceback.print_exc()
         sys.exit(2)
     finally:
         sys.exit()

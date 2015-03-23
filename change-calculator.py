@@ -50,7 +50,8 @@ def main():
             calculate_coins(change_total)
 
     except Exception:
-        print traceback.print_exc()
+        usage_info()
+        #print traceback.print_exc()
         sys.exit(2)
     finally:
         sys.exit()
